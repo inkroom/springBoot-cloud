@@ -1,0 +1,17 @@
+package cn.inkroom.study.cloud.dashboard;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+
+/**
+ * @author inkbox
+ * @date 2021/7/15
+ */
+@SpringBootApplication
+@EnableHystrixDashboard
+public class DashboardApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DashboardApplication.class, args);
+    }
+}

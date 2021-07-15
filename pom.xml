@@ -21,6 +21,7 @@
 
     <modules>
         <module>eureka-server</module>
+        <module>dashboard</module>
         <module>user</module>
         <module>fund</module>
         <module>product</module>
@@ -36,6 +37,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 <!--    <dependencyManagement>-->

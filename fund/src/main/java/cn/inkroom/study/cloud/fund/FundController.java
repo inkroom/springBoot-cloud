@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("fund")
-public class DemoRestController {
+public class FundController {
     @Autowired
     private HttpServletRequest request;
 
