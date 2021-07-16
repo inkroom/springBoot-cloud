@@ -1,0 +1,21 @@
+server:
+  port: 30001
+spring:
+  application:
+    name: zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.72:3098/eureka/
+
+zuul:
+  routes:
+    user:
+      path: /u/**
+      server-id: user
+    fund:
+      path: /f/**
+      server-id: fund
+    product:
+      path: /p/**
+      server-id: product
