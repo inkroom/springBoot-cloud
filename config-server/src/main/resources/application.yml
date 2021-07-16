@@ -6,9 +6,14 @@ spring:
   cloud:
     config:
       server:
-        git:
-          uri: https://code.aliyun.com/cdbcwd/config
-          basedir: config
+#        git:
+#          uri: https://github.com/inkroom/springBoot-cloud
+#          basedir: config
+          native:
+            search-locations: /Users/apple/resource/project/java/SpringCloud/config
+
+  profiles:
+    active: native #使用非git存储，都需要注明该配置
 eureka:
   client:
     service-url:

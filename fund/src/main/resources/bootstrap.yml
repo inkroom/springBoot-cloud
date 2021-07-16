@@ -3,8 +3,19 @@ spring:
     name: fund
   cloud:
     config:
-      uri: http://192.168.3.191:30003
       fail-fast: true
+#      基于服务发现的配置中心
+      discovery:
+        enabled: true
+        service-id: config
+#        基于url的配置中心
+#      uri: http://192.168.3.191:30003
   profiles:
     active:
       - v1
+
+#基于服务发现的配置中心，使用以下的配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.72:3098/eureka/
