@@ -1,5 +1,7 @@
 package cn.inkroom.study.cloud.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
@@ -12,6 +14,7 @@ import java.util.Random;
 @RequestMapping("user")
 public class UserController {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @GetMapping("timeout")
     public String timeout() {
@@ -35,7 +38,9 @@ public class UserController {
 
     @GetMapping("detail/{userId}")
     public String detail(@PathVariable("userId") Long id) {
+        logger.info("要获取{}的数据", id);
         System.out.println("获取user信息" + id);
+        logger.info("假设已经获取完了数据{}", id);
         return "user";
     }
 

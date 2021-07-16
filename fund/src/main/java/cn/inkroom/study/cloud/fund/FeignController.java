@@ -1,5 +1,7 @@
 package cn.inkroom.study.cloud.fund;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,15 @@ public class FeignController {
     private UserFacade userFacade;
     @Value("${feign.circuitbreaker.enabled}")
     private String demo;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @GetMapping("user/{id}")
     public String user(@PathVariable Long id) {
+        logger.info("调用前{}", id);
         System.out.println(demo);
-        return userFacade.getUser(id) + "---" + demo;
+        String user = userFacade.getUser(id);
+        logger.info("调用{}后{}", id, user);
+        return user + "---" + demo;
     }
 
     @GetMapping("timeout")

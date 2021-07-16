@@ -1,0 +1,16 @@
+server:
+  port: 30005
+  compression:
+    enabled: false # 不写会出错
+spring:
+  application:
+    name: zipkin
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.72:3098/eureka/
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false

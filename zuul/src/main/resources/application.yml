@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: zuul
+  zipkin:
+    discovery-client-enabled: true
+    service:
+      name: zipkin
 eureka:
   client:
     service-url:
@@ -19,3 +23,6 @@ zuul:
     product:
       path: /p/**
       server-id: product
+    zipkin:
+      path: /zipkin/**
+      server-id: zipkin
