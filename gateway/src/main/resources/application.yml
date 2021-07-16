@@ -1,0 +1,9 @@
+server:
+  port: 30002
+spring:
+  application:
+    name: gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.72:3098/eureka/

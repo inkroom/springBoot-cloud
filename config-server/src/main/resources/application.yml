@@ -1,0 +1,15 @@
+server:
+  port: 30003
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://code.aliyun.com/cdbcwd/config
+          basedir: config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.3.72:3098/eureka/

@@ -1,7 +1,7 @@
 package cn.inkroom.study.cloud.fund;
 
+import feign.hystrix.FallbackFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**

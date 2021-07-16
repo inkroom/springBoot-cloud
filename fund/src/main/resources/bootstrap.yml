@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: fund
+  cloud:
+    config:
+      uri: http://192.168.3.191:30003
+      fail-fast: true
+  profiles:
+    active:
+      - v1

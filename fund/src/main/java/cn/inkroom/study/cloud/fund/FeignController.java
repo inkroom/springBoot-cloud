@@ -1,6 +1,7 @@
 package cn.inkroom.study.cloud.fund;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeignController {
     @Autowired
     private UserFacade userFacade;
+    @Value("${feign.circuitbreaker.enabled}")
+    private String demo;
 
     @GetMapping("user/{id}")
     public String user(@PathVariable Long id) {
-        return userFacade.getUser(id);
+        System.out.println(demo);
+        return userFacade.getUser(id) + "---" + demo;
     }
 
     @GetMapping("timeout")
