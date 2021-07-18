@@ -16,6 +16,7 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:3098/eureka/
 
+
 zuul:
   routes:
     user:
@@ -33,3 +34,8 @@ zuul:
 logging:
   level:
     cn.inkroom: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
