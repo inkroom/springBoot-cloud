@@ -3,6 +3,8 @@ package cn.inkroom.study.cloud.zuul;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AuthorizeZuulFilter extends ZuulFilter {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Override
     public String filterType() {
         return FilterConstants.PRE_TYPE;
@@ -27,7 +31,7 @@ public class AuthorizeZuulFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
 
-        System.out.println("should");
+        logger.info("should");
         RequestContext currentContext = RequestContext.getCurrentContext();
         if (currentContext.getRequestQueryParams() == null) return false;
         return (currentContext.getRequestQueryParams().containsKey("code"));
@@ -41,7 +45,7 @@ public class AuthorizeZuulFilter extends ZuulFilter {
 
         String code = currentContext.getRequest().getParameter("code");
 
-        System.out.println("filter");
+        logger.info("filter");
         if ("123".equals(code)) {
             return null;
         }

@@ -10,11 +10,11 @@ spring:
 #          uri: https://github.com/inkroom/springBoot-cloud
 #          basedir: config
           native:
-            search-locations: /Users/apple/resource/project/java/SpringCloud/config
+            search-locations: /home/ink/study/study/后端/workplace/github/springBoot-cloud/config
 
   profiles:
     active: native #使用非git存储，都需要注明该配置
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.3.72:3098/eureka/
+      defaultZone: http://127.0.0.1:3098/eureka/

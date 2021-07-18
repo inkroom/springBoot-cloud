@@ -4,13 +4,17 @@ spring:
   application:
     name: zuul
   zipkin:
-    discovery-client-enabled: true
-    service:
-      name: zipkin
+    # 服务发现有问题，暂时只能使用url
+#    discovery-client-enabled: true
+    base-url: http://localhost:30005
+  sleuth:
+    sampler:
+      probability: 1.0
+      rate: 30
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.3.72:3098/eureka/
+      defaultZone: http://127.0.0.1:3098/eureka/
 
 zuul:
   routes:
@@ -26,3 +30,6 @@ zuul:
     zipkin:
       path: /zipkin/**
       server-id: zipkin
+logging:
+  level:
+    cn.inkroom: debug
