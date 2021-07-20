@@ -7,6 +7,12 @@ spring:
     discovery-client-enabled: true
     service:
       name: zipkin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:9092
+        username: nacos
+        password: nacos
 eureka:
   client:
     service-url:
