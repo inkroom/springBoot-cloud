@@ -4,6 +4,13 @@ spring:
   application:
     name: zuul
   zipkin:
+    # 服务发现有问题，暂时只能使用url
+#    discovery-client-enabled: true
+    base-url: http://localhost:30005
+  sleuth:
+    sampler:
+      probability: 1.0
+      rate: 30
     discovery-client-enabled: true
     service:
       name: zipkin
@@ -32,3 +39,11 @@ zuul:
     zipkin:
       path: /zipkin/**
       server-id: zipkin
+logging:
+  level:
+    cn.inkroom: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

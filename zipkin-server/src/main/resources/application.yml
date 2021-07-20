@@ -5,12 +5,19 @@ server:
 spring:
   application:
     name: zipkin
+  datasource:
+    url: jdbc:mysql://localhost:3007/zipkin
+    username: root
+    password: inkbox
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.3.72:3098/eureka/
+      defaultZone: http://127.0.0.1:3098/eureka/
 management:
   metrics:
     web:
       server:
         auto-time-requests: false
+zipkin:
+  storage:
+    type: mysql

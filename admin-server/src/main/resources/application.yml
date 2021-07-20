@@ -1,0 +1,21 @@
+server:
+  port: 30007
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: inkbox
+      password: inkbox
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:3098/eureka/
+#    register-with-eureka: false
+
+# admin是个拉模型，在把自己注册之后再启用security就必须注入认证信息
+  instance:
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
