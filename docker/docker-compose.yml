@@ -32,23 +32,29 @@ services:
 #      - 9092:8848
 #    volumes:
 #      - ./nacos/conf/application.properties:/home/nacos/init.d/custom.properties
-  eureka:
-    image: openjdk:11.0.11-jre
-    container_name: eureka
+#  eureka:
+#    image: openjdk:11.0.11-jre
+#    container_name: eureka
+#    ports:
+#      - 3098:3098
+#    entrypoint: ["java","-jar","cloud-eureka-server-0.0.1-SNAPSHOT.jar","--eureka.server.enable-self-preservation=false","--spring.cloud.hostname=192.168.1.103","--eureka.client.register-with-eureka=true","--eureka.instance.hostname=192.168.1.103"]
+#    working_dir: /usr/src/myapp
+#    hostname: eureka
+#    volumes:
+#      - ./:/usr/src/myapp
+#  gateway:
+#    image: openjdk:11.0.11-jre
+#    container_name: gateway
+#    ports:
+#      - 30002:30002
+#    entrypoint: [ "java","-jar","cloud-gateway-0.0.1-SNAPSHOT.jar","--eureka.client.service-url.defaultZone=http://192.168.1.103:3098/eureka/"]
+#    working_dir: /usr/src/myapp
+#    hostname: eureka
+#    volumes:
+#      - ./:/usr/src/myapp
+
+  redis:
+    image: redis:6.2.4-alpine
+    container_name: redis
     ports:
-      - 3098:3098
-    entrypoint: ["java","-jar","cloud-eureka-server-0.0.1-SNAPSHOT.jar","--eureka.server.enable-self-preservation=false","--spring.cloud.hostname=192.168.1.103","--eureka.client.register-with-eureka=true","--eureka.instance.hostname=192.168.1.103"]
-    working_dir: /usr/src/myapp
-    hostname: eureka
-    volumes:
-      - ./:/usr/src/myapp
-  gateway:
-    image: openjdk:11.0.11-jre
-    container_name: gateway
-    ports:
-      - 30002:30002
-    entrypoint: [ "java","-jar","cloud-gateway-0.0.1-SNAPSHOT.jar","--eureka.client.service-url.defaultZone=http://192.168.1.103:3098/eureka/"]
-    working_dir: /usr/src/myapp
-    hostname: eureka
-    volumes:
-      - ./:/usr/src/myapp
+    - 6399:6379

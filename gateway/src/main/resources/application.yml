@@ -10,6 +10,9 @@ spring:
           enabled: true
   profiles:
     active: dev
+  redis:
+    host: localhost
+    port: 6399
 eureka:
   client:
     service-url:
@@ -21,8 +24,12 @@ management:
     web:
       exposure:
         include: '*'
+
+
 logging:
   level:
+    root: debug
+    cn.inkroom: debug
     org:
       apache.http: off
       springframework:
