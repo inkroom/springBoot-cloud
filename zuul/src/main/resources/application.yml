@@ -11,6 +11,12 @@ spring:
     sampler:
       probability: 1.0
       rate: 30
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:3098
+        username: nacos
+        password: nacos
 eureka:
   client:
     service-url:
@@ -39,3 +45,4 @@ management:
     web:
       exposure:
         include: '*'
+

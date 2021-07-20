@@ -1,0 +1,36 @@
+version: "3"
+services:
+  nacos:
+    image: nacos/nacos-server
+    hostname: nacos
+    container_name: nacos
+    ports:
+      - 3098:3098
+      - 9848:9848
+      - 9555:9555
+#    depends_on:
+#      - nacosdb
+    volumes:
+      - ./custom.properties:/home/nacos/init.d/custom.properties
+    environment:
+      - MODE=standalone
+      - NACOS_APPLICATION_PORT=3098
+#      - PREFER_HOST_MODE=ip
+#      - SPRING_DATASOURCE_PLATFORM=mysql
+#      - MYSQL_SERVICE_HOST=192.168.0.103
+#      - MYSQL_SERVICE_DB_NAME=nacos
+#      - MYSQL_SERVICE_PORT=3319
+#      - MYSQL_SERVICE_USER=root
+#      - MYSQL_SERVICE_PASSWORD=nacos
+#      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+#  nacosdb:
+#    container_name: nacosdb
+#    image: mysql
+#    environment:
+#      - MYSQL_DATABASE=nacos
+#      - MYSQL_ROOT_PASSWORD=nacos
+#    volumes:
+##      - ./mysql:/var/lib/mysql
+#      - ./sql:/docker-entrypoint-initdb.d
+#    ports:
+#      - "3319:3306"
