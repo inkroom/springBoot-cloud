@@ -3,7 +3,39 @@ server:
 spring:
   application:
     name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+  profiles:
+    active: dev
 eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:3098/eureka/
+    eureka-service-url-poll-interval-seconds: 3
+    registry-fetch-interval-seconds: 3
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  level:
+    org:
+      apache.http: off
+      springframework:
+        cloud:
+          gateway:
+            handler:
+              RoutePredicateHandlerMapping: debug
+              FilteringWebHandler: debug
+
+    javax: off
+    sun: off
+    com:
+      netflix:
+        discovery:
+          shared: off
+

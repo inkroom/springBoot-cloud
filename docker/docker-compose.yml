@@ -1,36 +1,54 @@
-version: "3"
 services:
+  mysql:
+    image: mysql:5.7.34
+    container_name: nacosdb
+    hostname: nacosdb
+    ports:
+      - 3317:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=nacos
+      - MYSQL_DATABASE=nacos
   nacos:
-    image: nacos/nacos-server
-    hostname: nacos
+    image: openjdk:11.0.11-jre
     container_name: nacos
+    hostname: nacos
+    working_dir: /usr/src/myapp/bin
+    entrypoint: ["bash","startup.sh","-m","standalone"]
+    volumes:
+      - ./nacos:/usr/src/myapp
+    ports:
+      - 9092:8848
+    depends_on:
+      - mysql
+
+#  nacos:
+#    image: nacos/nacos-server
+#    hostname: nacos
+#    container_name: nacos
+#    ports:
+#      - 9092:8848
+#    volumes:
+#      - ./nacos/conf/application.properties:/home/nacos/init.d/custom.properties
+  eureka:
+    image: openjdk:11.0.11-jre
+    container_name: eureka
     ports:
       - 3098:3098
-      - 9848:9848
-      - 9555:9555
-#    depends_on:
-#      - nacosdb
+    entrypoint: ["java","-jar","cloud-eureka-server-0.0.1-SNAPSHOT.jar","--eureka.server.enable-self-preservation=false","--spring.cloud.hostname=192.168.1.103","--eureka.client.register-with-eureka=true","--eureka.instance.hostname=192.168.1.103"]
+    working_dir: /usr/src/myapp
+    hostname: eureka
     volumes:
-      - ./custom.properties:/home/nacos/init.d/custom.properties
-    environment:
-      - MODE=standalone
-      - NACOS_APPLICATION_PORT=3098
-#      - PREFER_HOST_MODE=ip
-#      - SPRING_DATASOURCE_PLATFORM=mysql
-#      - MYSQL_SERVICE_HOST=192.168.0.103
-#      - MYSQL_SERVICE_DB_NAME=nacos
-#      - MYSQL_SERVICE_PORT=3319
-#      - MYSQL_SERVICE_USER=root
-#      - MYSQL_SERVICE_PASSWORD=nacos
-#      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
-#  nacosdb:
-#    container_name: nacosdb
-#    image: mysql
-#    environment:
-#      - MYSQL_DATABASE=nacos
-#      - MYSQL_ROOT_PASSWORD=nacos
-#    volumes:
-##      - ./mysql:/var/lib/mysql
-#      - ./sql:/docker-entrypoint-initdb.d
-#    ports:
-#      - "3319:3306"
+      - ./:/usr/src/myapp
+  gateway:
+    image: openjdk:11.0.11-jre
+    container_name: gateway
+    ports:
+      - 30002:30002
+    entrypoint: [ "java","-jar","cloud-gateway-0.0.1-SNAPSHOT.jar","--eureka.client.service-url.defaultZone=http://192.168.1.103:3098/eureka/"]
+    working_dir: /usr/src/myapp
+    hostname: eureka
+    volumes:
+      - ./:/usr/src/myapp

@@ -12,9 +12,12 @@ spring:
       probability: 1.0
       rate: 30
   cloud:
+    discovery-client-enabled: true
+      service:
+        name: zipkin
     nacos:
       discovery:
-        server-addr: 127.0.0.1:3098
+        server-addr: 127.0.0.1:9092
         username: nacos
         password: nacos
 eureka:
@@ -45,4 +48,3 @@ management:
     web:
       exposure:
         include: '*'
-

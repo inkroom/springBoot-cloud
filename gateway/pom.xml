@@ -34,7 +34,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.inkroom.study.cloud.zuul.ZuulApplication</mainClass>
+                    <mainClass>cn.inkroom.study.cloud.gateway.GatewayApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
