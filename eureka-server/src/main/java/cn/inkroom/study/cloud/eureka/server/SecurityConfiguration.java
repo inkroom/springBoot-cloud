@@ -1,10 +1,11 @@
-package cn.inkroom.study.cloud.admin;
+package cn.inkroom.study.cloud.eureka.server;
 
-import de.codecentric.boot.admin.server.config.AdminServerProperties;
-import org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.WebSecurityEnablerConfiguration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.netflix.eureka.server.EurekaDashboardProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -17,9 +18,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private String adminContextPath;
 
-    public SecurityConfiguration(AdminServerProperties adminContextPath) {
-        this.adminContextPath = adminContextPath.getContextPath();
+    @Value("${eureka.dashboard.path:}")
+    private String dashboardPath = "";
+
+    public SecurityConfiguration(EurekaDashboardProperties adminContextPath) {
+        this.adminContextPath = adminContextPath.getPath();
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -27,12 +32,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
         handler.setTargetUrlParameter("redirectTo");
         http.authorizeRequests()
-                .antMatchers(adminContextPath + "/assets/**").permitAll()
+                .antMatchers(adminContextPath + "/assets/**", "/assets/**").permitAll()
+                .antMatchers(adminContextPath + "/login/assets/**").permitAll()
                 .antMatchers(adminContextPath + "/login").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage(adminContextPath + "/login")
-                .successHandler(handler)
+                .formLogin()
+                .loginPage(adminContextPath + "/login")
+                .defaultSuccessUrl(adminContextPath + "/")
+//                .loginProcessingUrl(adminContextPath + "/login")
+//                .successHandler(handler)
                 .and()
                 .logout().logoutUrl(adminContextPath + "/logout")
                 .and()

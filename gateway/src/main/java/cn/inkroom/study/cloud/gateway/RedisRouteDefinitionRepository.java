@@ -27,7 +27,7 @@ import java.util.Map;
  * @author inkbox
  * @date 2021/7/20
  */
-@Component
+//@Component
 public class RedisRouteDefinitionRepository implements RouteDefinitionRepository , InitializingBean {
     @Autowired
     private StringRedisTemplate template;

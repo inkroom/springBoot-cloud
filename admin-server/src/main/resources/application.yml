@@ -4,10 +4,13 @@ spring:
   application:
     name: admin-server
   security:
+
     user:
       name: inkbox
       password: inkbox
-
+  boot:
+    admin:
+      context-path: admin-server
 eureka:
   client:
     service-url:

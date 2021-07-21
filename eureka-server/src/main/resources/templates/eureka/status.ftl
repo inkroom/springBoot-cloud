@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="css/wro.css">
+    <link rel="stylesheet" href="assets/eureka/css/wro.css">
 
 </head>
 
@@ -59,7 +59,7 @@
                             </#if>
                             <#list instanceInfo.instances as instance>
                                 <#if instance.isHref>
-                                    <span title="<#list instance.metadata?keys as key>${key}:${instance.metadata[key]} </#list>">[${instance.id} - <#if instanceInfo.status=='UP'><a
+                                    <span title="${instance.url} <#list instance.metadata?keys as key>${key}:${instance.metadata[key]} </#list>">[${instance.id} - <#if instanceInfo.status=='UP'><a
                                         href="javascript:void(0);" onclick="down('${app.name}','${instance.id}')">down</a>
                                 <#else>
                                         <a href="javascript:void(0);" onclick="up('${app.name}','${instance.id}')">up</a>
@@ -125,7 +125,7 @@
         </tbody>
     </table>
 </div>
-<script type="text/javascript" src="js/wro.js"></script>
+<script type="text/javascript" src="assets/eureka/js/wro.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('table.stripeable tr:odd').addClass('odd');

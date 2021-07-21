@@ -53,6 +53,17 @@ services:
 #    volumes:
 #      - ./:/usr/src/myapp
 
+  admin:
+    image: openjdk:11.0.11-jre
+    container_name: admin
+    ports:
+      - 30007:30007
+    entrypoint: [ "java","-jar","cloud-admin-server-0.0.1-SNAPSHOT.jar","--eureka.client.service-url.defaultZone=http://192.168.1.103:3098/eureka/"]
+    working_dir: /usr/src/myapp
+    hostname: eureka
+    volumes:
+      - ./:/usr/src/myapp
+
   redis:
     image: redis:6.2.4-alpine
     container_name: redis

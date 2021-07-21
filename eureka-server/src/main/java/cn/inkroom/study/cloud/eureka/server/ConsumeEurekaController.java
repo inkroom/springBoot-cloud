@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,8 +25,11 @@ import com.netflix.eureka.registry.PeerAwareInstanceRegistryImpl;
 import com.netflix.eureka.resources.StatusResource;
 import com.netflix.eureka.util.StatusInfo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("${eureka.dashboard.path:/}")
 public class ConsumeEurekaController {
-
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Value("${eureka.dashboard.path:/}")
     private String dashboardPath = "";
 
@@ -47,6 +49,13 @@ public class ConsumeEurekaController {
     public ConsumeEurekaController(ApplicationInfoManager applicationInfoManager) {
         this.applicationInfoManager = applicationInfoManager;
     }
+
+    @GetMapping("login")
+    public String login(HttpServletRequest request) {
+        request.setAttribute("error", request.getParameter("error") != null);
+        return "login/login";
+    }
+
 
     @RequestMapping(method = RequestMethod.GET)
     public String status(HttpServletRequest request, Map<String, Object> model) {
