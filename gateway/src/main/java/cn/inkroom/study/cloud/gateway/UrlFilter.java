@@ -32,7 +32,7 @@ public class UrlFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        logger.info("{}-{}", exchange.getRequest().getURI(), context.getApplication("EUREKA"));
+        logger.info("{}  {},所有实例={}", exchange.getRequest().getURI(), context.getApplication("EUREKA").getInstances().get(0).getPort(), context.getApplications());
         return chain.filter(exchange);
     }
 

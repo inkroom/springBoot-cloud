@@ -8,15 +8,26 @@ spring:
       discovery:
         locator:
           enabled: true
+#      routes:
+#        - id: test
+#          uri: lb://eureka
+#          predicates:
+#            - Host=yapi.bcyunqian.com,www.bcyunqian.com
+#            - Path=/PP/***
+#          filters:
+#            - PreserveHostHeader
+#            - StripPrefix=1
+#            - RewritePath=/foo/(?<segment>.*), /$\{segment}
+
   profiles:
     active: dev
   redis:
     host: 127.0.0.1
-    port: 6379
+    port: 6399
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.3.72:3098/eureka/
+      defaultZone: http://127.0.0.1:3098/eureka/
     eureka-service-url-poll-interval-seconds: 3
     registry-fetch-interval-seconds: 3
 management:

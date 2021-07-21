@@ -1,8 +1,13 @@
 package cn.inkroom.study.cloud.gateway;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.config.GatewayProperties;
+import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -20,15 +25,28 @@ public class GatewayApplication {
 
     @Value("${spring.profiles.active}")
     private String active;
+    @Autowired
+    private GatewayProperties gatewayProperties;
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Bean
+    public RedisRouteDefinitionRepository redisRouteDefinitionRepository(){
+        return new RedisRouteDefinitionRepository();
+    }
+
+//    @Bean
     public RouteLocator locatorProd(RouteLocatorBuilder builder) {
+
+
+        logger.info("配置的路由{}", gatewayProperties.getRoutes());
+
         RouteLocatorBuilder.Builder contract = builder.routes();
         // eureka注册中心，暴露出来用于服务上下线
-//        contract.route("eureka", f ->
-//                f.path("/eureka/index.html")
-//                        .filters(fil -> fil.rewritePath(".*", "/").preserveHostHeader())
-//                        .uri("lb://EUREKA"));
+        contract.route("eureka", f ->
+                f.path("/eureka/index.html")
+                        .filters(fil -> fil.rewritePath(".*", "/").preserveHostHeader())
+                        .uri("lb://EUREKA"));
         contract.route("eureka-console",
                 f -> f.path("/eureka-console/**").filters(GatewayFilterSpec::preserveHostHeader).uri("lb://eureka"));
 
