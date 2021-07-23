@@ -10,6 +10,7 @@ spring:
 #        enabled: true
 #        service-id: config
 
+
     nacos:
       discovery:
         server-addr: 127.0.0.1:3098
@@ -25,3 +26,7 @@ spring:
 #  profiles:
 #    active:
 #      - v1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:3098/eureka/

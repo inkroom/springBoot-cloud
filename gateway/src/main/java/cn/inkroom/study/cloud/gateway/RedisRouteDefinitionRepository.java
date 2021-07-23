@@ -8,23 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.gateway.filter.FilterDefinition;
-import org.springframework.cloud.gateway.handler.AsyncPredicate;
-import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
-import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 基于redis存储路由信息
