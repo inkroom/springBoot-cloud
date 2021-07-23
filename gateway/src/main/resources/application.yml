@@ -22,14 +22,22 @@ spring:
   profiles:
     active: dev
   redis:
-    host: 127.0.0.1
-    port: 6399
+    host: 192.168.3.64
+    port: 6379
+#  boot:
+#    admin:
+#      client:
+#        api-path: instances-server
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:3098/eureka/
+      defaultZone: http://192.168.3.72:3098/eureka/
     eureka-service-url-poll-interval-seconds: 3
     registry-fetch-interval-seconds: 3
+  instance:
+    metadata-map:
+      management:
+        port: ${management.server.port}
 management:
   endpoints:
     web:
@@ -38,6 +46,9 @@ management:
   endpoint:
     health:
       show-details: always
+  server:
+    port: 9698 # 不会生效
+
 logging:
   level:
     cn.inkroom: debug

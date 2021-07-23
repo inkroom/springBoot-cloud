@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
         handler.setTargetUrlParameter("redirectTo");
         http.authorizeRequests()
-                .antMatchers("/eureka/**").permitAll()
+                .antMatchers("/eureka/**","/actuator/**").permitAll()
                 .antMatchers(adminContextPath + "/assets/**", "/assets/**").permitAll()
                 .antMatchers(adminContextPath + "/login/assets/**").permitAll()
                 .antMatchers(adminContextPath + "/login").permitAll()

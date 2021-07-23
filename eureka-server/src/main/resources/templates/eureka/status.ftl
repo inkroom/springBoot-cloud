@@ -135,7 +135,7 @@
     function down(appName,instanceId) {
         $.ajax({
             method: 'PUT',
-            url: 'apps/' + appName + '/' + instanceId + '/status?value=OUT_OF_SERVICE',
+            url: '/eureka/apps/' + appName + '/' + instanceId + '/status?value=OUT_OF_SERVICE',
             success: function (res) {
                 console.log(res);
                 location.reload();
@@ -149,7 +149,7 @@
     function up(appName, instanceId) {
         $.ajax({
             method: 'DELETE',
-            url: 'apps/' + appName + '/' + instanceId + '/status?value=UP',
+            url: '/eureka/apps/' + appName + '/' + instanceId + '/status?value=UP',
             success: function (res) {
                 console.log(res);
                 location.reload();
