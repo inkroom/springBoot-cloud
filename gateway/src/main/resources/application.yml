@@ -24,6 +24,7 @@ spring:
   redis:
     host: 192.168.3.64
     port: 6379
+    database: 12
 #  boot:
 #    admin:
 #      client:

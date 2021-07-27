@@ -53,17 +53,14 @@ public class GatewayApplication implements EnvironmentAware {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Bean
+    public RedisRouteDefinitionRepository redisRouteDefinitionRepository(){
+        return new RedisRouteDefinitionRepository();
+    }
+
+    @Bean
     public RouteLocator locatorProd(RouteLocatorBuilder builder) {
 
         RouteLocatorBuilder.Builder contract = builder.routes();
-        // eureka注册中心，暴露出来用于服务上下线
-        contract.route("eureka", f ->
-                f.path("/eureka/index.html")
-                        .filters(fil -> fil.rewritePath(".*", "/").preserveHostHeader())
-                        .uri("lb://EUREKA"));
-        contract.route("eureka-console",
-                f -> f.path("/eureka-console/**").filters(GatewayFilterSpec::preserveHostHeader).uri("lb://eureka"));
-
         //屏蔽监控端点
         contract.route("actuator", f -> f.path("/actuator/**").filters(gatewayFilterSpec -> gatewayFilterSpec.filter((exchange, chain) -> {
             // 直接404
@@ -73,39 +70,47 @@ public class GatewayApplication implements EnvironmentAware {
             return response.writeWith(Mono.just(response.bufferFactory().wrap("404了".getBytes(StandardCharsets.UTF_8))));
         })).uri("lb://404"));//反正不会到后面，地址随便填一个就行
 
-        //匹配eureka的静态资源以及一些api请求
-        contract.route("eureka", f -> f.path("/eureka/**").filters(GatewayFilterSpec::preserveHostHeader).uri("lb://eureka"));
-//        admin-server 网关
-        contract.route("admin-server", f -> f.path("/admin-server/**")
-                .filters(GatewayFilterSpec::preserveHostHeader).uri("lb://admin-server"));
-
-        if ("dev".equals(active)) {
-            contract.route("contract", f -> f.path("/**").filters(GatewayFilterSpec::preserveHostHeader)
-                    .uri("lb://contract"));
-        } else {
-            contract.route("contract", f -> f.host("www.bcyunqian.com")
-                    .and().host("yapi.bcyunqian.com")
-                    .and().host("yq.pre.bcyunqian.com")
-                    .filters(GatewayFilterSpec::preserveHostHeader)
-                    .uri("lb://contract"))
-                    .route("contact-admin", f -> f.host("admin.bcyunqian.com")
-                            .filters(GatewayFilterSpec::preserveHostHeader).uri("lb://contract-admin"))
-                    .route("uc", f -> f.host("uc.bcyunqian.com")
-                            .filters(GatewayFilterSpec::preserveHostHeader).uri("lb://user-center"))
-//                    前台测试环境
-                    .route("contract-test", f -> f.host("www.test.bcyunqian.com")
-                            .and().host("yapi.test.bcyunqian.com")
-                            .filters(GatewayFilterSpec::preserveHostHeader)
-                            .uri("lb://contract-test"))
-//                    后台管理测试环境
-                    .route("contract-admin-test", f -> f.host("admin.bcyunqian.com")
-                            .and()
-                            .path("/test/**")
-                            .filters(filter -> filter.stripPrefix(1))
-                            .uri("lib://contract-admin-test")
-                    )
-            ;
-        }
+//        // eureka注册中心，暴露出来用于服务上下线
+//        contract.route("eureka", f ->
+//                f.path("/eureka/index.html")
+//                        .filters(fil -> fil.rewritePath(".*", "/").preserveHostHeader())
+//                        .uri("lb://EUREKA"));
+//        contract.route("eureka-console",
+//                f -> f.path("/eureka-console/**").filters(GatewayFilterSpec::preserveHostHeader).uri("lb://eureka"));
+//
+//        //匹配eureka的静态资源以及一些api请求
+//        contract.route("eureka", f -> f.path("/eureka/**").filters(GatewayFilterSpec::preserveHostHeader).uri("lb://eureka"));
+////        admin-server 网关
+//        contract.route("admin-server", f -> f.path("/admin-server/**")
+//                .filters(GatewayFilterSpec::preserveHostHeader).uri("lb://admin-server"));
+//
+//        if ("dev".equals(active)) {
+//            contract.route("contract", f -> f.path("/**").filters(GatewayFilterSpec::preserveHostHeader)
+//                    .uri("lb://contract"));
+//        } else {
+//            contract.route("contract", f -> f.host("www.bcyunqian.com")
+//                    .and().host("yapi.bcyunqian.com")
+//                    .and().host("yq.pre.bcyunqian.com")
+//                    .filters(GatewayFilterSpec::preserveHostHeader)
+//                    .uri("lb://contract"))
+//                    .route("contact-admin", f -> f.host("admin.bcyunqian.com")
+//                            .filters(GatewayFilterSpec::preserveHostHeader).uri("lb://contract-admin"))
+//                    .route("uc", f -> f.host("uc.bcyunqian.com")
+//                            .filters(GatewayFilterSpec::preserveHostHeader).uri("lb://user-center"))
+////                    前台测试环境
+//                    .route("contract-test", f -> f.host("www.test.bcyunqian.com")
+//                            .and().host("yapi.test.bcyunqian.com")
+//                            .filters(GatewayFilterSpec::preserveHostHeader)
+//                            .uri("lb://contract-test"))
+////                    后台管理测试环境
+//                    .route("contract-admin-test", f -> f.host("admin.bcyunqian.com")
+//                            .and()
+//                            .path("/test/**")
+//                            .filters(filter -> filter.stripPrefix(1))
+//                            .uri("lib://contract-admin-test")
+//                    )
+//            ;
+//        }
         return contract.build();
     }
 
