@@ -95,6 +95,7 @@
             <!--            </plugin>-->
             <plugin>
                 <!--           清理打包构建npm的临时文件     -->
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
@@ -128,6 +129,22 @@
                             </filesets>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>clean-pre</id>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <!--            清除上一次构建出来的前端代码                        -->
+                                    <directory>target/dist</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
@@ -136,6 +153,9 @@
                 <directory>target/dist</directory>
                 <targetPath>META-INF/spring-boot-admin-server-ui/extensions/threadPool</targetPath>
                 <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
     </build>

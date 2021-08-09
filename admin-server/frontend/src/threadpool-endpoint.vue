@@ -15,8 +15,9 @@
   -->
 
 <template>
-  <div class="columns is-desktop">
-    <sba-panel :title="pool.name" v-for="pool in pools" :key="pool.name" class="column is-half-desktop">
+<div class="thread-pool">
+  <div class="columns is-desktop" v-for="(item,index) in pools" :key="index" >
+    <sba-panel :title="pool.name" v-for="pool in item" :key="pool.name" class="column is-half-desktop">
       <template v-slot:actions>
         <router-link
           :to="{ name: 'journal', query: { instanceId: instance.id } }"
@@ -32,6 +33,7 @@
         </tr>
       </table>
     </sba-panel>
+  </div>
   </div>
 </template>
 
@@ -49,7 +51,28 @@ export default {
   }),
   async created() {
     const response = await this.instance.axios.get("actuator/threadPool"); //<2>
-    this.pools = response.data;
+  //  this.pools = response.data;
+    //两个为一组
+
+    let array = [];
+
+    for(var i=0;i<response.data.length;i+=2){
+
+        let item = [];
+        if(i<response.data.length){
+            item.push(response.data[i]);
+        }
+        if(i+1<response.data.length){
+            item.push(response.data[i+1]);
+
+        }
+        array.push(item);
+
+    }
+
+    this.pools = array;
+
+
   },
 };
 </script>
