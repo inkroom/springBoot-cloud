@@ -4,7 +4,7 @@ spring:
   cloud:
 #    config:
 #      fail-fast: true
-#      uri: http://127.0.0.1:3098
+#      uri: http://192.168.3.72:3098
     #      基于服务发现的配置中心
 #      discovery:
 #        enabled: true
@@ -13,11 +13,11 @@ spring:
 
     nacos:
       discovery:
-        server-addr: 127.0.0.1:3098
+        server-addr: 192.168.3.72:3098
         username: nacos
         password: nacos
       config:
-        server-addr: 127.0.0.1:3098
+        server-addr: 192.168.3.72:3098
         username: nacos
         password: nacos
         context-path: nacos
@@ -29,4 +29,4 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:3098/eureka/
+      defaultZone: http://192.168.3.72:3098/eureka/

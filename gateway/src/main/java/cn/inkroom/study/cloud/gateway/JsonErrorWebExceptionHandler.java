@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @author inkbox
  * @date 2021/7/22
  */
-@Component
+//@Component
 @Order(-1)//这里必须要，否则无法生效
 public class JsonErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
 

@@ -11,10 +11,16 @@ spring:
   boot:
     admin:
       context-path: admin-server
+#      ui:
+#        extension-resource-locations: file:/Users/apple/resource/temp/spring-boot-admin/spring-boot-admin-samples/spring-boot-admin-sample-custom-ui/target/dist/
+#        cache:
+#          no-cache: true
+#        cache-templates: false
+
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:3098/eureka/
+      defaultZone: http://192.168.3.72:3098/eureka/
 #    register-with-eureka: false
 
 # admin是个拉模型，在把自己注册之后再启用security就必须注入认证信息

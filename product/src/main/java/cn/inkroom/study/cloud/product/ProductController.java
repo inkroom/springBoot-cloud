@@ -31,7 +31,7 @@ public class ProductController {
             @PathVariable int amount
     ) {
 
-        String url = "http://FUND/fund/account/balance/{userId}/{amount}";
+        String url = "http://USER/fund/account/balance/{userId}/{amount}";
         Map<String, Object> map = new HashMap<>();
         map.put("userId", userId);
         map.put("amount", amount);
